@@ -1,0 +1,15 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: skyblue;
+}
+.form{
+    margin-left: 5%;
+    height: 650px;
+    float: left;
+    background-color: wheat;
+}
+
+.form >form{
+    margin-left: 15px;
+}
