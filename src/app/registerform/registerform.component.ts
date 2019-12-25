@@ -27,7 +27,7 @@ export class RegisterformComponent implements OnInit {
     // console.log(this.data.value)
       this.http.post("http://localhost:3000/data",this.data.value)
       .subscribe(
-        (data)=>{
+        (data:any)=>{
         alert(data.mess);
         // console.log(data)
       }, error => {

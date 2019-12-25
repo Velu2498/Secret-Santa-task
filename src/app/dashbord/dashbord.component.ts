@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashbord',
@@ -6,10 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashbord.component.css']
 })
 export class DashbordComponent implements OnInit {
+  card=[];
+  constructor(private http:HttpClient) { 
 
-  constructor() { }
+    this.http.get("http://localhost:3000/afterlogin")
+      .subscribe(
+        (data)=>{
+        console.log(data)
+        this.card.push(data)
+      }
+      )
+  }
+
 
   ngOnInit() {
   }
+ 
+  ngonchange(){
+    
+  }
+
+ 
 
 }

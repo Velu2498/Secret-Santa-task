@@ -28,7 +28,8 @@
                 </label>
               </div>
             </div>
-            <a class="btn btn-primary btn-block"  [routerLink]="['../dashbord']" (click)=add()>Login</a>
+            <a class="btn btn-primary btn-block"  (click)=add()>Login</a>
+            [routerLink]="['../dashbord']"
             <span *ngIf="d=='velu@123'">admin</span> 
             <span *ngIf="d!='velu@123' && d !=''"  >player</span>  
             {{v}}
