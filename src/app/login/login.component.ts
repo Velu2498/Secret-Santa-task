@@ -34,8 +34,10 @@ data = new FormGroup({
       this.http.post("http://localhost:3000/login",this.data.value)
       .subscribe(
         (data:any)=>{ 
+        v.push(data.mess)
+        localStorage.setItem("token", data.token );
+        // alert(data.token);
         alert(data.mess);
-         v.push(data.mess)
         // console.log(v)
       }, error => {
           console.log(error);

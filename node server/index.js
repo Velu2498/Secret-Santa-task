@@ -17,10 +17,10 @@ app.use(bodyp.json());
 //authentication
 function authentication(req, res, nxt) {
   // var incomingToken=req.header("Authorization");
-  var incomingToken=req.body.token
-console.log(incomingToken)
+  var incomingToken = localStorage.getItem("token");
+// console.log(incomingToken)
   jwt.verify(incomingToken,"code",function(err,decode){
-    console.log(decode)
+    // console.log(decode)
     if(decode !== undefined){
       nxt()
     }
@@ -32,31 +32,6 @@ console.log(incomingToken)
   })
 }
 
-
-
-//getting data from form & post to data base
-// app.post('/data',function(req,res){
-
-//     mongoclient.connect(url, function(err, client) {
-//       if (err) throw err;
-
-//       // console.log(req.body)
-
-//       db=client.db("myflim")
-
-//       db.collection("authors").insertOne(req.body,(err,data)=>{
-//         if (err) throw err;
-
-//         // console.log(data)
-
-//         res.json({"mess":"inserted data in data base"})
-
-//       }
-//     )
-//         client.close()
-
-//     });
-// })
 
 
 //getting data from form & post to data base encrypted 
@@ -76,7 +51,7 @@ app.post('/data', function (req, res) {
 
         req.body.password = hash
 
-        console.log(req.body)
+        // console.log(req.body)
 
         if (err) throw err;
 
@@ -99,50 +74,6 @@ app.post('/data', function (req, res) {
 })
 
 
-//login validation
-// app.post('/login',function(req,res){
-
-//     mongoclient.connect(url, function(err, client) {
-//       if (err) throw err;
-
-//       db=client.db("myflim")
-      
-//       // console.log(req.body)
-//       var result=db.collection("authors").findOne({email:req.body.email})
-
-//       result.then(
-//         function (userdata){
-//           console.log(userdata)
-//           // console.log(req.body)
-
-//           if(userdata == null){
-//             res.json({
-//               mess:"mail id not found"
-//             })
-//           }
-
-//           else{
-//           bcrypt.compare(req.body.password,userdata.password,function (err,hashresult){
-//             if(hashresult==true){
-//               res.json({
-//                 mess:"welcome"
-//               })
-//             }
-//             else{
-//               res.json({
-//                 mess:"invalid password"
-//               })
-//             }
-//           })
-//           }
-
-//           client.close()
-//         })
-
-//       })
-
-//     })
-
 
 //login with token
 app.post('/login',function(req,res){
@@ -157,7 +88,7 @@ app.post('/login',function(req,res){
 
     result.then(
       function (userdata){
-        console.log(userdata)
+        // console.log(userdata)
         // console.log(req.body)
 
         if(userdata == null){
@@ -169,11 +100,11 @@ app.post('/login',function(req,res){
         else{
         bcrypt.compare(req.body.password,userdata.password,function (err,hashresult){
           if(hashresult==true){
-
-            jwt.sign({
-              exp:Math.floor(Date.now()/1000) + (60 *60),
-              data:'foobar'
-            },"code",function(err,token){
+            
+            const data={ //payload
+              email:req.body.email
+            }
+            jwt.sign({data},"code",  { expiresIn: '50s' } ,function(err,token){
               if (err) throw err;
               console.log(token)
               res.json({
@@ -207,7 +138,7 @@ app.get('/',function (req, res) {
 })
 
 //check token
-app.get('/afterlogin', authentication , function (req, res) {
+app.post('/afterlogin', authentication , function (req, res) {
   res.json({
     "key":"val"
   })

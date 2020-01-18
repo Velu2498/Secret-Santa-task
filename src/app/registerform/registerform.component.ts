@@ -34,7 +34,6 @@ export class RegisterformComponent implements OnInit {
           console.log(error);
       }
       )
-
     }
 
 }
