@@ -8,18 +8,28 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DashbordComponent implements OnInit {
   card=[];
+
   constructor(private http:HttpClient) { 
 
+    setTimeout(() => {
+
     var data =  localStorage.getItem("token")
-    console.log(data)
-    this.http.post("http://localhost:3000/afterlogin",data)
+    var json={data}
+    console.log(json)
+
+    this.http.post("http://localhost:3000/afterlogin",json)
     .subscribe(
-      (data:any)=>{ 
-      alert(data);
+      (res:any)=>{ 
+      console.log(res.status)
+      alert(res.key);
+      console.log("hmfcht")
     }, error => {
         console.log(error);
     } 
     )
+      
+    }, 1000);
+    
 
     // this.http.get("http://localhost:3000/afterlogin")
     //   .subscribe(
@@ -29,8 +39,6 @@ export class DashbordComponent implements OnInit {
     //   }
     //   )
     
-
-
   }
 
 

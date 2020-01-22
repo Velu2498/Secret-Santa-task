@@ -16,8 +16,10 @@ app.use(bodyp.json());
 
 //authentication
 function authentication(req, res, nxt) {
-  // var incomingToken=req.header("Authorization");
-  var incomingToken = localStorage.getItem("token");
+  // var incomingToken=req.header("Authorization")
+  var incomingToken=req.body.data
+  // incomingToken="hvgrfvriktudtfedhvfifeiyvy"
+  // var incomingToken = localStorage.getItem("token");
 // console.log(incomingToken)
   jwt.verify(incomingToken,"code",function(err,decode){
     // console.log(decode)

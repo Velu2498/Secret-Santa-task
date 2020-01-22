@@ -29,25 +29,32 @@ data = new FormGroup({
 
    //insert the value to database
    add(){
-     var v=[];
-    console.log(this.data.value)
+    //  var v=[];
+    // console.log(this.data.value)
       this.http.post("http://localhost:3000/login",this.data.value)
       .subscribe(
         (data:any)=>{ 
-        v.push(data.mess)
+        // v.push(data.mess)
         localStorage.setItem("token", data.token );
         // alert(data.token);
         alert(data.mess);
-        // console.log(v)
-      }, error => {
+        // console.log(v) 
+        if(data.mess=="welcome"){
+          this.r.navigate(['/dashbord'])   
+        }
+
+      }, 
+      error => {
           console.log(error);
       } 
+      
       )
 
-      if(v[0]=="welcome"){
-        this.r.navigate(['/dashbord'])   
-      }
-      console.log(v)
+      // if(v[0]=="welcome"){
+      //   this.r.navigate(['/dashbord'])   
+      // }
+      // console.log(v)
+
     }
 
 }
